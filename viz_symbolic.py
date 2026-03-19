@@ -5,15 +5,23 @@ import numpy as np
 import re
 
 import sys
-sys.path.append(r"C:\Users\angie\Documents\lsys_gen")
+
+# Ensure local imports (e.g. pipeline.py) resolve even when Blender runs from a different cwd.
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__)) if "__file__" in globals() else os.getcwd()
+if SCRIPT_DIR not in sys.path:
+    sys.path.insert(0, SCRIPT_DIR)
+
 from pipeline import NUM_BINS_THETA, NUM_BINS_PHI, NUM_BINS_F
 import pipeline
+NUM_BINS_THETA, NUM_BINS_PHI, NUM_BINS_F = 12, 12, 10
 # ============================================================
 # CONFIG
 # ============================================================
 
 INPUT_FOLDER = r"C:\Users\angie\Documents\lsys_gen\results\final"
 SIMPLIFIED_FOLDER = r"C:\Users\angie\Documents\lsys_gen\results\simplified"
+
+INPUT_FOLDER = r"E:\TREES_DATASET_P3_LSTRING\LSTRINGS_RESULTS\LSTRINGS_FINAL_SMALL"
 
 # INPUT_FOLDER = r"C:\Users\angie\Documents\lsys_gen\lstrings_generator\results\final"
 # SIMPLIFIED_FOLDER = r"C:\Users\angie\Documents\lsys_gen\lstrings_generator\results\simplified"
@@ -36,7 +44,7 @@ if os.path.exists(SIMPLIFIED_FOLDER) and os.path.exists(INPUT_FOLDER):
 GLOBAL_LENGTH_MAX = max_len_found if max_len_found > 0 else pipeline.GLOBAL_LENGTH_MAX
 print(f"Viz set GLOBAL_LENGTH_MAX to: {GLOBAL_LENGTH_MAX}")
 
-MAX_TREES       = 20
+MAX_TREES       = 3000 # 20
 LENGTH_VARIANCE = 0.05
 ANGLE_VARIANCE  = 2.0   # degrees jitter per bin
 
@@ -85,6 +93,10 @@ txt_files = sorted(f for f in os.listdir(INPUT_FOLDER) if f.endswith(".txt"))
 for tree_idx, filename in enumerate(txt_files):
     if tree_idx >= MAX_TREES:
         break
+
+    if '1445' not in filename: 
+        continue
+    print(f"Processing {filename}...")
 
     with open(os.path.join(INPUT_FOLDER, filename), "r") as f:
         program = f.read().strip()

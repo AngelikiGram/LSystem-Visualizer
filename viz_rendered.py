@@ -9,6 +9,9 @@ from mathutils import Vector, Matrix
 # ============================================================
 SPECIES = "Spruce"
 
+SPECIES = "Poplar"
+num_tree = 3
+
 BASE_LEAF_DIR = r"C:\Users\angie\Documents\the_grove_22_indie\the_grove_22\templates\Transparency_Twigs_modify\TwigsLibrary"
 BARK_DIR = r"C:\Users\angie\Documents\the_grove_22_indie\the_grove_22\templates\BarkTextures"
 
@@ -18,20 +21,21 @@ STEPS = 5
 
 BASE_RADIUS    = 0.15
 DEPTH_DECAY    = 0.72 
-SEGMENT_TAPER  = 0.94 # Keep closer to 1.0 for smoother long branches
+SEGMENT_TAPER  = 0.9 # 0.94 # Keep closer to 1.0 for smoother long branches
 MIN_RADIUS     = 0.006 
 BRANCH_SIDES   = 16
 
 LEAF_SIZE = 0.12
 LEAF_MIN_DEPTH = 2 
 
-LEAVES_PER_TERMINAL = 1
+LEAVES_PER_TERMINAL = 0 # 1
 
 # Maximum depth for branches to keep (prune deeper branches before adding leaves)
 DEPTH_MAX = 2
 
 INPUT_FOLDER = r"./results/final" 
 INPUT_FOLDER = r"C:\Users\angie\Documents\visualizer_Lsystem\results\final"
+INPUT_FOLDER = r"C:\Users\angie\Documents\treesformer_new\results_old_1\results\france_700_previous_model"
 # INPUT_FOLDER = r"./results/growth/dense" 
 SIMPLIFIED_FOLDER = r"./results/simplified"
 import sys
@@ -423,4 +427,4 @@ bpy.ops.object.delete()
 
 files = [f for f in os.listdir(INPUT_FOLDER) if f.endswith(".txt")]
 if files:
-    build_organic_tree(os.path.join(INPUT_FOLDER, files[0]))
+    build_organic_tree(os.path.join(INPUT_FOLDER, files[num_tree]))
